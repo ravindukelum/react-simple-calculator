@@ -1,61 +1,42 @@
 import "./App.css";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 function App() {
-  const inputRef = useRef(null);
-  const resultRef = useRef(null);
-  const [result, setResult] = useState(0);
 
-  const plus = (e) => {
-    e.preventDefault();
-    setResult((result) => result + Number(inputRef.current.value));
-  };
+  const [score,setScore]=useState('10');
+  const [comment,setComment]=useState("");
 
-  const minus = (e) => {
+  const handleComment=(e)=>{
     e.preventDefault();
-    setResult((result) => result - Number(inputRef.current.value));
-  };
-
-  const times = (e) => {
-    e.preventDefault();
-    setResult((result) => result * Number(inputRef.current.value));
-  };
-
-  const divide = (e) => {
-    e.preventDefault();
-    setResult((result) => result / Number(inputRef.current.value));
-  };
-
-  const resetInput = (e) => {
-    e.preventDefault();
-    inputRef.current.value = 0;
-  };
-
-  const resetResult = (e) => {
-    e.preventDefault();
-    setResult((prevVal) => prevVal * 0);
-  };
+    if(Number(score)<=5 && comment.length<=10){
+      alert("Please provide a comment explaining why the experience was poor,");
+      return;
+    }
+  }
 
   return (
     <div className="App">
-      <div>
-        <h1>Simplest working Calculator</h1>
-      </div>
-      <form>
-        <p ref={resultRef}>{result}</p>
-        <input
-          pattern="[0.9]"
-          ref={inputRef}
-          type="number"
-          placeholder="Type a number"
-        />
-        <button onClick={plus}>Add</button>
-        <button onClick={minus}>Subtract</button>
-        <button onClick={times}>Multiply</button>
-        <button onClick={divide}>Divide</button>
-        <button onClick={resetInput}>reset input</button>
-        <button onClick={resetResult}>reset result</button>
+      
+      <form onSubmit={handleComment}>
+        <fieldset>
+          <h2>Feedback Form</h2>
+          <div className="Field">
+            <label>Score:{score}⭐</label>
+            <input
+              type="range"
+              min="0"
+              max="10"
+              onChange={(e) => setScore(e.target.value)}
+            />
+          </div>
+          <div className="Field">
+            <label>Comment:</label>
+            <textarea value={comment} onChange={e=> setComment(e.target.value)}/>
+
+          </div>
+          <button type="submit">Submit</button>
+        </fieldset>
       </form>
     </div>
   );
