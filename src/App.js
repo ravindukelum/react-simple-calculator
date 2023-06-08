@@ -7,18 +7,21 @@ function App() {
   const [score,setScore]=useState('10');
   const [comment,setComment]=useState("");
 
-  const handleComment=(e)=>{
+  const handleSubmit=(e)=>{
     e.preventDefault();
     if(Number(score)<=5 && comment.length<=10){
       alert("Please provide a comment explaining why the experience was poor,");
       return;
     }
+    console.log("Form submitted");
+    setComment("");
+    setScore("10");
   }
 
   return (
     <div className="App">
       
-      <form onSubmit={handleComment}>
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <h2>Feedback Form</h2>
           <div className="Field">
@@ -27,6 +30,7 @@ function App() {
               type="range"
               min="0"
               max="10"
+              value={score}
               onChange={(e) => setScore(e.target.value)}
             />
           </div>
